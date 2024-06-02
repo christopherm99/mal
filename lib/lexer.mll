@@ -11,6 +11,8 @@ rule token = parse
   | "return"   { RETURN }
   | ['a'-'z' 'A'-'Z']+ ['a'-'z' 'A'-'Z' '0'-'9']* { IDENT (Lexing.lexeme lexbuf) }
   | '='        { EQ }
+  | '+'        { PLUS }
+  | '*'        { TIMES }
   | ','        { COMMA }
   | ';'        { SEMICOLON }
   | '('        { LPAREN }

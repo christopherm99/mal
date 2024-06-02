@@ -8,7 +8,10 @@ let pp_ident ppf s = fprintf ppf "%s" s
 let rec pp_expr ppf = function
   | Variable name -> pp_ident ppf name
   | Number n -> fprintf ppf "%d" n
-  | Plus (e1, e2) -> fprintf ppf "%a@ +@ %a" pp_expr e1 pp_expr e2
+  | Binary (op, e1, e2) ->
+      match op with 
+      | Plus -> fprintf ppf "%a@ +@ %a" pp_expr e1 pp_expr e2
+      | Times -> fprintf ppf "%a@ *@ %a" pp_expr e1 pp_expr e2
 
 let rec pp_stmt ppf = function
   | Function (Prototype (name, args), body) ->

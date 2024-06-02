@@ -1,5 +1,6 @@
 (library
- (name mal))
+ (name mal)
+ (libraries llvm llvm.analysis))
 
 (menhir
   (modules parser))

@@ -1,7 +1,11 @@
+type op =
+  | Plus
+  | Times
+
 type expr =
   | Variable of string
   | Number of int
-  | Plus of expr * expr
+  | Binary of op * expr * expr
 
 type proto = Prototype of string * string list
 

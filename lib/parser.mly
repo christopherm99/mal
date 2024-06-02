@@ -9,6 +9,8 @@
 %token LET
 %token RETURN
 %token EQ
+%token PLUS
+%token TIMES
 %token COMMA
 %token SEMICOLON
 %token LPAREN
@@ -16,6 +18,9 @@
 %token LBRACE
 %token RBRACE
 %token EOF
+
+%left  PLUS
+%left  TIMES
 
 %start toplevel
 %type <Syntax.statement list> toplevel
@@ -38,8 +43,10 @@ statement:
 ;
 
 expr:
-  | IDENT  { Variable $1 }
-  | NUMBER { Number $1 }
+  | IDENT           { Variable $1 }
+  | NUMBER          { Number $1 }
+  | expr PLUS expr  { Binary (Plus, $1, $3) }
+  | expr TIMES expr { Binary (Times, $1, $3) }
 ;
 
 args:

@@ -1,4 +1,4 @@
-(executable
- (public_name mal)
- (name main)
+(executables
+ (names repl compiler)
+ (public_names mal malc)
  (libraries mal))

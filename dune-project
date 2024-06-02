@@ -11,7 +11,7 @@
 
 (maintainers "Christopher Milan")
 
-(license LICENSE)
+(license MIT)
 
 (documentation https://github.com/christopherm99/mal)
 

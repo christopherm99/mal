@@ -4,7 +4,7 @@ synopsis: "mal, bad... in the latin"
 description: "A programming language"
 maintainer: ["Christopher Milan"]
 authors: ["Christopher Milan"]
-license: "LICENSE"
+license: "MIT"
 homepage: "https://github.com/christopherm99/mal"
 doc: "https://github.com/christopherm99/mal"
 bug-reports: "https://github.com/christopherm99/mal/issues"

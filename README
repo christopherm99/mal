@@ -1,2 +1,12 @@
-Mal, Bad ... in the latin.
+Mal, bad... in the latin.
+          - River Tam
+
+A simple programming language. Inspired by HolyC.
+
+Designed to be used in my operating system (https://github.com/christopherm99/os).
+
+TODO:
+ * LLVM IR code generation
+ * Better testing
+ * Better pretty printing (read: code formatter)
 

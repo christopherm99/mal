@@ -3,7 +3,6 @@
  (libraries llvm llvm.analysis))
 
 (menhir
-  (modules parser))
+ (modules parser))
 
 (ocamllex lexer)
-

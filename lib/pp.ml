@@ -2,6 +2,7 @@ open Format
 open Syntax
 
 let pp_comma ppf () = fprintf ppf ",@ "
+let pp_newl  ppf () = fprintf ppf "@;"
 let pp_ident ppf s = fprintf ppf "%s" s
 
 let rec pp_expr ppf = function
@@ -12,7 +13,7 @@ let rec pp_expr ppf = function
 let rec pp_stmt ppf = function
   | Function (Prototype (name, args), body) ->
       fprintf ppf "@[<hov>fun %s(%a) {@;@[<hov 2>%a@]@;}"
-        name (pp_print_list ~pp_sep:pp_comma pp_ident) args pp_stmt body 
+        name (pp_print_list ~pp_sep:pp_comma pp_ident) args (pp_print_list ~pp_sep:pp_newl pp_stmt) body 
   | Let (name, e) ->
       fprintf ppf "let %s = %a;" name pp_expr e
   | Return e ->

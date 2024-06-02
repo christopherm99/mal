@@ -29,7 +29,7 @@ toplevel:
   | statement toplevel { $1 :: $2 }
 
 statement:
-  | FN IDENT LPAREN args RPAREN LBRACE statement RBRACE
+  | FN IDENT LPAREN args RPAREN LBRACE statement+ RBRACE
     { Function (Prototype ($2, $4), $7) }
   | LET IDENT EQ expr SEMICOLON
     { Let ($2, $4) }

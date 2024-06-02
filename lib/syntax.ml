@@ -6,8 +6,7 @@ type expr =
 type proto = Prototype of string * string list
 
 type statement =
-  | Function of proto * statement
+  | Function of proto * statement list
   | Let of string * expr
   | Return of expr
-
 

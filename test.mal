@@ -1,1 +1,6 @@
-fn test() { return 0; }
+fn test() {
+  let x = 0;
+  let y = 0;
+  let z=0;let a = 1; let b = 2; let c=3; let d =4;
+  return 0;
+}

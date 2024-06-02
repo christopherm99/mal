@@ -5,22 +5,22 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github christopherm99/mal))
 
-(authors "Author Name")
+(authors "Christopher Milan")
 
-(maintainers "Maintainer Name")
+(maintainers "Christopher Milan")
 
 (license LICENSE)
 
-(documentation https://url/to/documentation)
+(documentation https://github.com/christopherm99/mal)
 
 (package
  (name mal)
- (synopsis "A short synopsis")
- (description "A longer description")
- (depends ocaml dune)
- (tags
-  (topics "to describe" your project)))
+ (synopsis "mal, bad... in the latin")
+ (description "A programming language")
+ (depends ocaml dune))
+
+(using menhir 3.0)
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project

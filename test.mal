@@ -1,1 +1,1 @@
-fn test { a + b; }
+fn test() { return 0; }

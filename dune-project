@@ -19,7 +19,7 @@
  (name mal)
  (synopsis "mal, bad... in the latin")
  (description "A programming language")
- (depends ocaml dune (alcotest :with-test)))
+ (depends ocaml dune menhir (alcotest :with-test)))
 
 (using menhir 3.0)
 

@@ -11,6 +11,7 @@ bug-reports: "https://github.com/christopherm99/mal/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.15"}
+  "menhir"
   "alcotest" {with-test}
   "odoc" {with-doc}
 ]

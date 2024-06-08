@@ -1,8 +1,9 @@
 (library
  (name mal)
- (libraries llvm llvm.analysis))
+ (libraries llvm llvm.analysis menhirLib))
 
 (menhir
- (modules parser))
+ (modules parser)
+ (flags --table))
 
 (ocamllex lexer)

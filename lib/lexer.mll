@@ -1,9 +1,10 @@
 {
   open Parser
+  exception SyntaxError of string
 }
 
 rule token = parse
-    [' ' '\t' '\r'] { token lexbuf }
+  | [' ' '\t' '\r'] { token lexbuf }
   | '\n'       { Lexing.new_line lexbuf; token lexbuf }
   | ['0'-'9']+ { NUMBER (int_of_string (Lexing.lexeme lexbuf)) }
   | "fn"       { FN }
@@ -19,5 +20,6 @@ rule token = parse
   | ')'        { RPAREN }
   | '{'        { LBRACE }
   | '}'        { RBRACE }
+  | _          { raise (SyntaxError ("Unexpected char: " ^ Lexing.lexeme lexbuf)) }
   | eof        { EOF }
 

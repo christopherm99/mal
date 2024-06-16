@@ -43,10 +43,11 @@ statement:
 ;
 
 expr:
-  | IDENT           { Variable $1 }
-  | NUMBER          { Number $1 }
-  | expr PLUS expr  { Binary (Plus, $1, $3) }
-  | expr TIMES expr { Binary (Times, $1, $3) }
+  | IDENT                                           { Variable $1 }
+  | NUMBER                                          { Number $1 }
+  | expr PLUS expr                                  { Binary (Plus, $1, $3) }
+  | expr TIMES expr                                 { Binary (Times, $1, $3) }
+  | IDENT LPAREN separated_list(COMMA, expr) RPAREN { Call ($1, $3) }
 ;
 
 args:

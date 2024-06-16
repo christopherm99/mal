@@ -20,6 +20,17 @@ let rec codegen_expr = function
       match op with
       | Syntax.Plus -> build_add lhs_val rhs_val "addtmp" builder
       | Syntax.Times -> build_mul lhs_val rhs_val "multmp" builder)
+  | Syntax.Call (name, args) ->
+      let fn =
+        match lookup_function name the_module with
+        | Some f -> f
+        | None ->
+            raise
+              (Error (Printf.sprintf "function named '%s' is not defined" name))
+      in
+      build_call (type_of fn) fn
+        (Array.of_list (List.map (fun a -> codegen_expr a) args))
+        "calltmp" builder
 
 let codegen_proto = function
   | Syntax.Prototype (name, args) ->

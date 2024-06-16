@@ -12,6 +12,8 @@ let rec pp_expr ppf = function
       match op with
       | Plus -> fprintf ppf "%a@ +@ %a" pp_expr e1 pp_expr e2
       | Times -> fprintf ppf "%a@ *@ %a" pp_expr e1 pp_expr e2)
+  | Call (name, args) ->
+      fprintf ppf "%s(%a)" name (pp_print_list ~pp_sep:pp_comma pp_expr) args
 
 let rec pp_stmt ppf = function
   | Function (Prototype (name, args), body) ->

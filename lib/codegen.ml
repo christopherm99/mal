@@ -46,7 +46,15 @@ let rec codegen_expr ctx = function
         "calltmp" ctx.llvm_builder
 
 let rec codegen_statement ctx = function
-  | Syntax.Let (_, _) -> raise (Error "let: unimplemented")
+  | Syntax.Let (name, expr) ->
+      (* TODO: should this be a real variable? *)
+      {
+        ctx with
+        scope =
+          StringMap.add name
+            (codegen_expr ctx expr, i64_type ctx.llvm_context)
+            ctx.scope;
+      }
   | Syntax.Return _ -> raise (Error "return must be inside a function")
   | Syntax.Function (proto, body) -> (
       let (Syntax.Prototype (name, args)) = proto in
@@ -55,16 +63,16 @@ let rec codegen_statement ctx = function
           (i64_type ctx.llvm_context)
           (Array.make (List.length args) (i64_type ctx.llvm_context))
       in
-      let f =
+      let fn =
         match lookup_function name ctx.llvm_module with
         | None -> declare_function name ft ctx.llvm_module
-        | Some f ->
+        | Some fn ->
             (* if f already has a body, we can't reuse this name *)
-            if Array.length (basic_blocks f) == 0 then ()
+            if Array.length (basic_blocks fn) == 0 then ()
             else
               raise (Error (Printf.sprintf "redefinition of function: %s" name));
             (* ensure prototypes match *)
-            if Array.length (params f) == List.length args then ()
+            if Array.length (params fn) == List.length args then ()
             else
               raise
                 (Error
@@ -72,24 +80,24 @@ let rec codegen_statement ctx = function
                       "definition of function %s does not match forward \
                        declaration"
                       name));
-            f
+            fn
       in
       let fnscope =
         List.mapi
           (fun i arg_name ->
-            let p = (params f).(i) in
+            let p = (params fn).(i) in
             set_value_name arg_name p;
             (arg_name, (p, i64_type ctx.llvm_context)))
           args
       in
+      let ctx = { ctx with scope = StringMap.add name (fn, ft) ctx.scope } in
       let fnctx =
         {
           ctx with
           scope = StringMap.add_seq (fnscope |> List.to_seq) ctx.scope;
-          func = Some (name, f);
+          func = Some (name, fn);
         }
       in
-      let name, fn = unsafe_unpack fnctx.func in
       let bb = append_block fnctx.llvm_context "entry" fn in
       position_at_end bb fnctx.llvm_builder;
       let rec codegen_func ctx = function
@@ -104,7 +112,7 @@ let rec codegen_statement ctx = function
       in
       try
         codegen_func fnctx body;
-        { ctx with scope = StringMap.add name (fn, ft) ctx.scope }
+        ctx
       with e ->
         delete_function fn;
         (* FIXME: bug with deleting forward declarations *)

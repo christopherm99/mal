@@ -1,6 +1,6 @@
 open Mal.Parser.MenhirInterpreter
 
-let rec repl () =
+let rec repl ?ctx () =
   print_string "> ";
   try
     let rec multiline_helper lb =
@@ -41,9 +41,13 @@ let rec repl () =
     let program = helper (Mal.Parser.Incremental.toplevel lb.lex_start_p) lb in
     Format.printf "%a" (Format.pp_print_list Mal.Pp.pp_stmt) program;
     Format.print_newline ();
-    ignore @@ List.map Mal.Codegen.codegen_statement program;
-    Llvm.dump_module Mal.Codegen.the_module;
-    repl ()
+    let ctx =
+      match ctx with
+      | None -> Mal.Codegen.codegen program
+      | Some ctx -> Mal.Codegen.codegen ~ctx program
+    in
+    Llvm.dump_module ctx.Mal.Codegen.llvm_module;
+    repl ~ctx ()
   with
   | End_of_file -> exit 0
   | Mal.Utils.ParseError pos ->

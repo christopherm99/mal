@@ -17,7 +17,7 @@ let rec pp_expr ppf = function
 
 let rec pp_stmt ppf = function
   | Function (Prototype (name, args), body) ->
-      fprintf ppf "@[<hov>fun %s(%a) {@;@[<hov 2>%a@]@;}" name
+      fprintf ppf "@[<hov>fn %s(%a) {@;@[<hov 2>%a@]@;}" name
         (pp_print_list ~pp_sep:pp_comma pp_ident)
         args
         (pp_print_list ~pp_sep:pp_newl pp_stmt)

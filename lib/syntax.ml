@@ -1,4 +1,4 @@
-type op = Plus | Times
+type op = Plus | Times | Minus
 
 type expr =
   | Variable of string
@@ -11,4 +11,5 @@ type proto = Prototype of string * string list
 type statement =
   | Function of proto * statement list
   | Let of string * expr
+  | If of expr * statement list * statement list option
   | Return of expr

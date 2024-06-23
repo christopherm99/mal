@@ -9,11 +9,14 @@ rule token = parse
   | ['0'-'9']+ { NUMBER (int_of_string (Lexing.lexeme lexbuf)) }
   | "fn"       { FN }
   | "let"      { LET }
+  | "if"       { IF }
+  | "else"     { ELSE }
   | "return"   { RETURN }
   | ['a'-'z' 'A'-'Z']+ ['a'-'z' 'A'-'Z' '0'-'9']* { IDENT (Lexing.lexeme lexbuf) }
   | '='        { EQ }
   | '+'        { PLUS }
   | '*'        { TIMES }
+  | '-'        { MINUS }
   | ','        { COMMA }
   | ';'        { SEMICOLON }
   | '('        { LPAREN }

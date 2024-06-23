@@ -6,7 +6,12 @@ A simple programming language. Inspired by HolyC.
 Designed to be used in my operating system (https://github.com/christopherm99/os).
 
 TODO:
- * LLVM IR code generation
- * Better testing
- * Better pretty printing (read: code formatter)
+ -[x] LLVM IR code generation
+ -[ ] Better testing
+ -[ ] Better pretty printing (read: code formatter)
+ -[ ] Refactor error handling (ie. SyntaxError, NameError, etc.)
+ -[ ] Run code in REPL
+ -[ ] Support top-level expressions in REPL
+ -[ ] More builtin types (ie. i8, i16, i32, unsigned ints, bools, floats)
+ -[ ] User-defined types (ie. structs, unions?)
 

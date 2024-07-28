@@ -1,4 +1,7 @@
 open Mal.Parser.MenhirInterpreter
+open Llvm
+open Ctypes
+open Foreign
 
 let rec repl ?ctx () =
   print_string "> ";
@@ -46,7 +49,9 @@ let rec repl ?ctx () =
       | None -> Mal.Codegen.codegen program
       | Some ctx -> Mal.Codegen.codegen ~ctx program
     in
-    Llvm.dump_module ctx.Mal.Codegen.llvm_module;
+    dump_module ctx.Mal.Codegen.llvm_module;
+    let fn = Llvm_executionengine.get_function_address "_repl" (funptr (void @-> returning int64_t)) (Llvm_executionengine.create ctx.Mal.Codegen.llvm_module) in
+    ignore @@ fn ();
     repl ~ctx ()
   with
   | End_of_file -> exit 0
@@ -61,4 +66,4 @@ let rec repl ?ctx () =
       Printf.printf "CodegenError: %s\n" msg;
       repl ()
 
-let () = repl ()
+let () = ignore @@ Llvm_executionengine.initialize (); repl ()

@@ -1,6 +1,6 @@
 (library
  (name mal)
- (libraries llvm llvm.analysis menhirLib))
+ (libraries llvm llvm.analysis llvm.executionengine llvm.bitwriter menhirLib ctypes-foreign))
 
 (menhir
  (modules parser)
